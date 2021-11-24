@@ -20,32 +20,10 @@ class AbstractFunctionalTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        $servicesCache = __DIR__ . '/../../cache/services.cache';
-        if (file_exists($servicesCache)){
-            self::assertTrue(unlink($servicesCache));
-        } else {
-            self::assertTrue(true);
-        }
-
-        $servicesCache = __DIR__ . '/../../cache/models.cache';
-        if (file_exists($servicesCache)){
-            self::assertTrue(unlink($servicesCache));
-        } else {
-            self::assertTrue(true);
-        }
-
-        $servicesCache = __DIR__ . '/../../cache/modelsDefinitions.cache';
-        if (file_exists($servicesCache)){
-            self::assertTrue(unlink($servicesCache));
-        } else {
-            self::assertTrue(true);
-        }
-
-        $servicesCache = __DIR__ . '/../../cache/servicesModels.cache';
-        if (file_exists($servicesCache)){
-            self::assertTrue(unlink($servicesCache));
-        } else {
-            self::assertTrue(true);
+        foreach(glob(__DIR__ . '/../../cache/*') as $file) {
+            if(is_file($file)) {
+                unlink($file);
+            }
         }
 
         foreach(glob(__DIR__ . '/../../logs/*') as $file) {
