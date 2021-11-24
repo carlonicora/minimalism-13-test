@@ -34,6 +34,7 @@ services:
         - XDEBUG_PORT=${XDEBUG_PORT}
     volumes:
       - ../:/var/www/html:delegated
+      - ../../../minimalism:/source/minimalism:delegated
     networks:
       - default_network
 
