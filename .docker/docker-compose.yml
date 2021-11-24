@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  nginx-minimalism-v1-0:
+    container_name: nginx-minimalism-${SERVER_VERSION}
+    image: carlonicora/minimalism-nginx:${SERVER_VERSION}
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+      args:
+        - SERVER_NAME=${SERVER_NAME}
+        - CONTAINER_NAME=minimalism-v1.0
+        - SERVER_VERSION=${SERVER_VERSION}
+    expose:
+      - "80"
+    volumes:
+      - ../:/var/www/html:delegated
+      - ../logs:/logs/nginx:delegated
+    networks:
+      - default_network
+
+  minimalism-v1-0:
+    container_name: minimalism-${SERVER_VERSION}
+    image: carlonicora/minimalism:${SERVER_VERSION}
+    restart: unless-stopped
+    working_dir: /var/www/html
+    build:
+      context: .
+      dockerfile: ./php-fpm/Dockerfile
+      target: ${ENVIRONMENT}
+      args:
+        - XDEBUG_HOST=${XDEBUG_HOST}
+        - XDEBUG_PORT=${XDEBUG_PORT}
+    volumes:
+      - ../:/var/www/html:delegated
+    networks:
+      - default_network
+
+networks:
+  default_network:
+    driver: bridge
+    name: carlonicora

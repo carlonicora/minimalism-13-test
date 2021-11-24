@@ -1,0 +1,52 @@
+{
+  "name": "carlonicora/minimalism-13-test",
+  "description": "TEST",
+  "version": "1.0.0",
+  "homepage": "https://carlonicora.com",
+  "time": "2020-12-28",
+  "license": "MIT",
+  "type": "library",
+  "minimum-stability": "alpha",
+  "authors": [
+    {
+      "name": "Carlo Nicora",
+      "email": "carlo@carlonicora.com",
+      "homepage": "https://carlonicora.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "CarloNicora\\Minimalism\\Minimalism13Test\\":"src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CarloNicora\\Minimalism\\Minimalism13Test\\Tests\\":"tests/"
+    }
+  },
+  "require": {
+    "php": ">=8.1",
+    "ext-json": "*",
+    "carlonicora/jsonapi": "~3.0",
+    "carlonicora/minimalism": "dev-ver-13-alpha",
+    "carlonicora/minimalism-interface-encrypter": "dev-ver-13-alpha",
+    "carlonicora/minimalism-service-encrypter": "dev-ver-13-alpha"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9",
+    "ext-xdebug": "*"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:carlonicora/minimalism.git"
+    }, {
+      "type": "vcs",
+      "url": "git@github.com:carlonicora/minimalism-interface-encrypter.git"
+    }, {
+      "type": "vcs",
+      "url": "git@github.com:carlonicora/minimalism-service-encrypter.git"
+    }
+  ]
+}
