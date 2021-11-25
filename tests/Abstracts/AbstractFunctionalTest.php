@@ -20,15 +20,25 @@ class AbstractFunctionalTest extends TestCase
     {
         parent::setUpBeforeClass();
 
-        foreach(glob(__DIR__ . '/../../cache/*') as $file) {
-            if(is_file($file)) {
-                unlink($file);
-            }
-        }
+        self::deleteAllFilesInFolder(__DIR__ . '/../../cache');
+        self::deleteAllFilesInFolder(__DIR__ . '/../../logs', false);
+    }
 
-        foreach(glob(__DIR__ . '/../../logs/*') as $file) {
+    /**
+     * @param string $dir
+     * @param bool $recursive
+     */
+    private static function deleteAllFilesInFolder(
+        string $dir,
+        bool $recursive=true,
+    ): void
+    {
+        foreach(glob($dir . '/*') as $file) {
             if(is_file($file)) {
                 unlink($file);
+            } elseif ($recursive){
+                self::deleteAllFilesInFolder($file);
+                rmdir($file);
             }
         }
     }

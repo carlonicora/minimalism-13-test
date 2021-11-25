@@ -7,6 +7,7 @@ use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
 use CurlHandle;
 use Exception;
 use JsonException;
+use Throwable;
 
 class ApiResponse
 {
@@ -45,7 +46,7 @@ class ApiResponse
             try {
                 $apiResponse = json_decode($returnedJson, true, 512, JSON_THROW_ON_ERROR);
                 $this->response = new Document($apiResponse);
-            } catch (JsonException) {
+            } catch (Exception| Throwable) {
                 $this->response = $returnedJson;
             }
         }

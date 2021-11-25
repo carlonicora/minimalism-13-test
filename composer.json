@@ -34,7 +34,8 @@
     "carlonicora/minimalism-interface-encrypter": "~1.0",
     "carlonicora/minimalism-service-encrypter": "~4.0",
     "carlonicora/minimalism-service-logger": "~1.0",
-    "carlonicora/minimalism-service-datavalidator": "~1.0"
+    "carlonicora/minimalism-service-datavalidator": "~1.0",
+    "carlonicora/minimalism-service-twig": "~2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
