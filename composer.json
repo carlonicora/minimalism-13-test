@@ -32,10 +32,13 @@
     "carlonicora/jsonapi": "~3.0",
     "carlonicora/minimalism": "~13.0",
     "carlonicora/minimalism-interface-encrypter": "~1.0",
+    "carlonicora/minimalism-interface-cache": "~1.0",
+    "carlonicora/minimalism-interface-data": "~1.0",
     "carlonicora/minimalism-service-encrypter": "~4.0",
     "carlonicora/minimalism-service-logger": "~1.0",
     "carlonicora/minimalism-service-datavalidator": "~1.0",
-    "carlonicora/minimalism-service-twig": "~2.0"
+    "carlonicora/minimalism-service-twig": "~2.0",
+    "carlonicora/minimalism-service-mysql": "~5.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",

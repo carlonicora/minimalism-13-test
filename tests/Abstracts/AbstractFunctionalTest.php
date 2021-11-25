@@ -4,14 +4,16 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\ServiceInterface;
 use CarloNicora\Minimalism\Minimalism;
+use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\Setup\Traits\GenerateData;
+use CarloNicora\Minimalism\Minimalism13Test\Tests\Traits\ServiceGenerationTrait;
 use Exception;
 use JsonException;
 use PHPUnit\Framework\TestCase;
 
 class AbstractFunctionalTest extends TestCase
 {
-    /** @var Minimalism|null  */
-    private static ?Minimalism $minimalism=null;
+    use GenerateData;
+    use ServiceGenerationTrait;
 
     /**
      * @throws Exception
@@ -22,6 +24,14 @@ class AbstractFunctionalTest extends TestCase
 
         self::deleteAllFilesInFolder(__DIR__ . '/../../cache');
         self::deleteAllFilesInFolder(__DIR__ . '/../../logs', false);
+
+        static::cleanDatabases(
+            mysqlService: static::createMySQL(),
+        );
+
+        static::generateTestData(
+            mysqlService: static::createMySQL(),
+        );
     }
 
     /**
@@ -93,19 +103,5 @@ class AbstractFunctionalTest extends TestCase
         }
 
         return json_encode($arrayMessage, JSON_THROW_ON_ERROR);
-    }
-
-    /**
-     * @return EncrypterInterface|ServiceInterface
-     * @throws Exception
-     */
-    protected static function createEncrypter(
-    ): EncrypterInterface|ServiceInterface
-    {
-        if (self::$minimalism === null) {
-            self::$minimalism = new Minimalism();
-        }
-
-        return self::$minimalism->getService(EncrypterInterface::class);
     }
 }
