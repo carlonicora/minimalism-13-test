@@ -9,6 +9,7 @@ class ModelValidator extends AbstractModel
     /**
      * @param TestValidator $payload
      * @return int
+     * @noinspection PhpUnusedParameterInspection
      */
     public function post(
         TestValidator $payload,

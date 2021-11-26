@@ -6,7 +6,7 @@ use CarloNicora\Minimalism\Abstracts\AbstractModel;
 use CarloNicora\Minimalism\Interfaces\Data\Interfaces\DataInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Parameters\PositionedEncryptedParameter;
-use CarloNicora\Minimalism\Minimalism13Test\Data\Databases\M13T\Tables\UsersTable;
+use CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables\UsersTable;
 use CarloNicora\Minimalism\Minimalism13Test\Validators\UserNewValidator;
 use CarloNicora\Minimalism\Minimalism13Test\Validators\UserValidator;
 use Exception;

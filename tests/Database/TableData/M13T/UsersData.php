@@ -1,7 +1,7 @@
 <?php
 namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData\M13T;
 
-use CarloNicora\Minimalism\Minimalism13Test\Data\Databases\M13T\Tables\UsersTable;
+use CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables\UsersTable;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData\TableDataInterface;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData\Traits\MapFields;
 use CarloNicora\Minimalism\Services\MySQL\Abstracts\AbstractMySqlTable;

@@ -6,7 +6,6 @@ use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
 use CurlHandle;
 use Exception;
-use JsonException;
 use Throwable;
 
 class ApiResponse

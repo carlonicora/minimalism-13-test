@@ -6,7 +6,7 @@ use CarloNicora\Minimalism\Services\DataValidator\Abstracts\AbstractDataValidato
 use CarloNicora\Minimalism\Services\DataValidator\Objects\AttributeValidator;
 use CarloNicora\Minimalism\Services\DataValidator\Objects\DocumentValidator;
 use CarloNicora\Minimalism\Services\DataValidator\Objects\ResourceValidator;
-use \Exception;
+use Exception;
 
 class TestValidator extends AbstractDataValidator
 {

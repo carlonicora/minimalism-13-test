@@ -1,5 +1,5 @@
 <?php
-namespace CarloNicora\Minimalism\Minimalism13Test\Data\Databases\M13T\Tables;
+namespace CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables;
 
 use CarloNicora\Minimalism\Services\MySQL\Abstracts\AbstractMySqlTable;
 use CarloNicora\Minimalism\Services\MySQL\Interfaces\FieldInterface;

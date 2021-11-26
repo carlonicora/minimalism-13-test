@@ -1,9 +1,6 @@
 <?php
 namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts;
 
-use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
-use CarloNicora\Minimalism\Interfaces\ServiceInterface;
-use CarloNicora\Minimalism\Minimalism;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\Setup\Traits\GenerateData;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Traits\ServiceGenerationTrait;
 use Exception;

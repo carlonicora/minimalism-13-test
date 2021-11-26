@@ -3,7 +3,7 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Validators;
 
 use CarloNicora\Minimalism\Interfaces\Data\Interfaces\DataInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
-use CarloNicora\Minimalism\Minimalism13Test\Data\Databases\M13T\Tables\UsersTable;
+use CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables\UsersTable;
 use CarloNicora\Minimalism\Services\DataValidator\Abstracts\AbstractDataValidator;
 use CarloNicora\Minimalism\Services\DataValidator\Objects\AttributeValidator;
 use CarloNicora\Minimalism\Services\DataValidator\Objects\DocumentValidator;
