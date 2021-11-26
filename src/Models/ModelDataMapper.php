@@ -5,7 +5,11 @@ use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Parameters\PositionedEncryptedParameter;
+use CarloNicora\Minimalism\Minimalism13Test\Data\User;
 use CarloNicora\Minimalism\Minimalism13Test\Readers\UserReader;
+use CarloNicora\Minimalism\Minimalism13Test\Validators\UserNewValidator;
+use CarloNicora\Minimalism\Minimalism13Test\Validators\UserValidator;
+use CarloNicora\Minimalism\Minimalism13Test\Writers\UserWriter;
 use Exception;
 
 class ModelDataMapper extends AbstractModel
@@ -39,6 +43,57 @@ class ModelDataMapper extends AbstractModel
         $this->document->addResource(
             $userResource
         );
+
+        return 200;
+    }
+
+    /**
+     * @param EncrypterInterface $encrypter
+     * @param UserWriter $writeUser
+     * @param UserNewValidator $payload
+     * @return int
+     * @throws Exception
+     */
+    public function post(
+        EncrypterInterface $encrypter,
+        UserWriter $writeUser,
+        UserNewValidator $payload,
+    ): int
+    {
+        $user = new User(email: $payload->getDocument()->resources[0]->attributes->get('email'));
+        $user = $writeUser->insert($user);
+
+        $this->getDocument()->addResource(
+            resource: new ResourceObject(
+                type: 'user',
+                id: $encrypter->encryptId($user->getId()),
+            ),
+        );
+
+        return 201;
+    }
+
+    /**
+     * @param EncrypterInterface $encrypter
+     * @param UserReader $readUser
+     * @param UserWriter $writeUser
+     * @param UserValidator $payload
+     * @return int
+     * @throws Exception
+     */
+    public function patch(
+        EncrypterInterface $encrypter,
+        UserReader $readUser,
+        UserWriter $writeUser,
+        UserValidator $payload,
+    ): int
+    {
+        $id = $encrypter->decryptId($payload->getDocument()->resources[0]->id);
+
+        $user = $readUser->loadById($id);
+        $user->setEmail($payload->getDocument()->resources[0]->attributes->get('email'));
+
+        $writeUser->update($user);
 
         return 200;
     }
