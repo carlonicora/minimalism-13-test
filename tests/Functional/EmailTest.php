@@ -27,4 +27,23 @@ class EmailTest extends AbstractFunctionalTest
             actual: $response->getHttpCode(),
         );
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testSendTwigEmail(
+    ): void
+    {
+        $response = self::call(
+            request: new Data(
+                verb: Verbs::Post,
+                endpoint: '/modelemailtwig',
+            )
+        );
+
+        self::assertEquals(
+            expected: HttpCode::Created,
+            actual: $response->getHttpCode(),
+        );
+    }
 }

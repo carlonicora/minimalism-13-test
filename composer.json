@@ -45,7 +45,8 @@
     "carlonicora/minimalism-service-redis": "~4.0",
     "carlonicora/minimalism-service-builder": "~2.0",
     "carlonicora/minimalism-service-rabbitmq": "~5.0",
-    "carlonicora/minimalism-service-mailer-mandrill": "~1.0"
+    "carlonicora/minimalism-service-mailer-mandrill": "~1.0",
+    "carlonicora/minimalism-service-mailer-twig": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9",
