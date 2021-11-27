@@ -54,7 +54,7 @@ class UserReader extends AbstractMinimalismLoader
                     parameters: [$userId],
                     cacheBuilder: $this->cacheFactory->user($userId)
                 ),
-                relationshipLevel: 0,
+                relationshipLevel: 1,
             )
         );
     }

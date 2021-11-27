@@ -29,6 +29,9 @@ class AbstractFunctionalTest extends TestCase
         static::generateTestData(
             mysqlService: static::createMySQL(),
         );
+        try {
+            self::createRabbitMq()->purge('myQueue');
+        } catch (Exception) {}
     }
 
     /**

@@ -1,12 +1,14 @@
 <?php
 namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData;
 
+use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData\M13T\BooksData;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData\M13T\UsersData;
 use IntBackedEnum;
 
 enum Tables
 {
     case Users;
+    case Books;
 
     /**
      * @return array
@@ -32,7 +34,8 @@ enum Tables
     public function dataEnum(): string|IntBackedEnum|TableDataInterface
     {
         return match ($this) {
-            self::Users=> UsersData::class,
+            self::Users => UsersData::class,
+            self::Books => BooksData::class,
         };
     }
 }

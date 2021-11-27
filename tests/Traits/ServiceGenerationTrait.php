@@ -6,6 +6,7 @@ use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\ServiceInterface;
 use CarloNicora\Minimalism\Minimalism;
 use CarloNicora\Minimalism\Services\MySQL\MySQL;
+use CarloNicora\Minimalism\Services\RabbitMq\RabbitMq;
 use Exception;
 
 trait ServiceGenerationTrait
@@ -47,26 +48,17 @@ trait ServiceGenerationTrait
         self::setupMinimalism();
 
         return self::$minimalism->getService(MySQL::class);
+    }
 
-        /*
-        if (self::$mysql === null) {
-            $MINIMALISM_SERVICE_MYSQL = self::getEnvParameter('MINIMALISM_SERVICE_MYSQL');
-            putenv('MINIMALISM_SERVICE_MYSQL=' . $MINIMALISM_SERVICE_MYSQL);
-            $_ENV['MINIMALISM_SERVICE_MYSQL'] = $MINIMALISM_SERVICE_MYSQL;
-            foreach (explode(',', $MINIMALISM_SERVICE_MYSQL) as $db){
-                $dbConnectionString = self::getEnvParameter($db);
-                putenv($db . '=' . $dbConnectionString);
-                $_ENV[$db] = $dbConnectionString;
-            }
+    /**
+     * @return RabbitMq|ServiceInterface
+     * @throws Exception
+     */
+    protected static function createRabbitMQ(
+    ): RabbitMq|ServiceInterface
+    {
+        self::setupMinimalism();
 
-            self::$mysql = new MySQL(
-                logger: self::generateLogger(),
-                cache: null,
-                MINIMALISM_SERVICE_MYSQL: $MINIMALISM_SERVICE_MYSQL,
-            );
-        }
-
-        return self::$mysql;
-        */
+        return self::$minimalism->getService(RabbitMq::class);
     }
 }

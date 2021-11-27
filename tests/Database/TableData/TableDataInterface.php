@@ -15,5 +15,4 @@ interface TableDataInterface
      * @return array
      */
     public function row(): array;
-
 }

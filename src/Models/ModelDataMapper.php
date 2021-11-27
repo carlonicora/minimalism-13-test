@@ -60,7 +60,10 @@ class ModelDataMapper extends AbstractModel
         UserNewValidator $payload,
     ): int
     {
-        $user = new User(email: $payload->getDocument()->resources[0]->attributes->get('email'));
+        $user = new User(
+            objectFactory: $this->objectFactory,
+            email: $payload->getDocument()->resources[0]->attributes->get('email')
+        );
         $user = $writeUser->insert($user);
 
         $this->getDocument()->addResource(
