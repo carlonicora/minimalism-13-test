@@ -10,20 +10,20 @@ class ModelRabbit extends AbstractModel
 {
     /**
      * @param RabbitMq $rabbitMq
-     * @param PositionedParameter $queueName
-     * @param PositionedParameter $message
+     * @param string $queueName
+     * @param string $message
      * @return int
      * @throws Exception
      */
     public function post(
         RabbitMq            $rabbitMq,
-        PositionedParameter $queueName,
-        PositionedParameter $message,
+        string $queueName,
+        string $message,
     ): int
     {
         $rabbitMq->dispatchMessage(
-            message: [$message->getValue()],
-            queueName: $queueName->getValue(),
+            message: [$message],
+            queueName: $queueName,
         );
 
         return 201;

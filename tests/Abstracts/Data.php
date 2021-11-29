@@ -13,7 +13,8 @@ class Data
      * Data constructor.
      * @param Verbs $verb
      * @param string $endpoint
-     * @param array|string $body
+     * @param array|null $body
+     * @param array|null $payload
      * @param string|null $bearer
      * @param array $files
      * @param array $requestHeader
@@ -21,7 +22,8 @@ class Data
     public function __construct(
         public Verbs $verb,
         public string $endpoint,
-        public array|string $body = [],
+        public ?array $body = null,
+        public ?array $payload = null,
         public ?string $bearer = null,
         public array $files = [],
         public array $requestHeader = []
@@ -75,12 +77,10 @@ class Data
         switch ($this->verb){
             case Verbs::Post:
                 $opts [CURLOPT_POST] = 1;
-                if (false === empty($this->body)) {
-                    if (is_array($this->body)) {
-                        $arrayBody = json_encode($this->body, JSON_THROW_ON_ERROR);
-                    }
-
-                    $opts[CURLOPT_POSTFIELDS] = $arrayBody ?? $this->body;
+                if ($this->body !== null){
+                    $opts[CURLOPT_POSTFIELDS] = http_build_query($this->body) ;
+                } elseif ($this->payload !== null){
+                    $opts[CURLOPT_POSTFIELDS] = json_encode($this->payload, JSON_THROW_ON_ERROR);
                 }
 
                 if (false === empty($this->files)) {

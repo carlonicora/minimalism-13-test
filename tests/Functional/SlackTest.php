@@ -7,7 +7,7 @@ use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\Verbs;
 use Exception;
 
-class RabbitTest extends AbstractFunctionalTest
+class SlackTest extends AbstractFunctionalTest
 {
     /**x
      * @throws Exception
@@ -18,30 +18,13 @@ class RabbitTest extends AbstractFunctionalTest
         $response = self::call(
             request: new Data(
                 verb: Verbs::Post,
-                endpoint: '/modelrabbit',
-                body: [
-                    'queueName' => 'myQueue',
-                    'message' => 'myMessage'
-                ],
+                endpoint: '/modelslack',
             )
         );
 
         self::assertEquals(
             expected: HttpCode::Created,
             actual: $response->getHttpCode(),
-        );
-    }
-
-    /**
-     * @depends testPost
-     * @throws Exception
-     */
-    public function testQueue(
-    ):void
-    {
-        self::assertEquals(
-            expected: 1,
-            actual: self::createRabbitMQ()->countMessagesInQueue('myQueue')
         );
     }
 }
