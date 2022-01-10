@@ -2,20 +2,21 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use Exception;
 
 class Parameter extends AbstractModel
 {
     /**
      * @param string $name
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function get(
         string $name,
-    ): int
+    ): HttpCode
     {
         $this->document->meta->add('name', $name);
-        return 200;
+        return HttpCode::Ok;
     }
 }

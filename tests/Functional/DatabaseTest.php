@@ -5,7 +5,7 @@ use CarloNicora\JsonApi\Document;
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\AbstractFunctionalTest;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\Data;
-use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\Verbs;
 use Exception;
 
@@ -71,7 +71,7 @@ class DatabaseTest extends AbstractFunctionalTest
         $resourceErrorWrongType = new ResourceObject(type:'wrong');
         $documentErrorWrongType->addResource($resourceErrorWrongType);
         $response[] = [
-            HttpCode::ValidationFailed,
+            HttpCode::PreconditionFailed,
             $documentErrorWrongType,
         ];
 
@@ -79,7 +79,7 @@ class DatabaseTest extends AbstractFunctionalTest
         $resourceErrorMissingEmail = new ResourceObject(type:'user');
         $documentErrorMissingEmail->addResource($resourceErrorMissingEmail);
         $response[] = [
-            HttpCode::ValidationFailed,
+            HttpCode::PreconditionFailed,
             $documentErrorMissingEmail,
         ];
 
@@ -88,7 +88,7 @@ class DatabaseTest extends AbstractFunctionalTest
         $documentErrorTooManyResources->addResource($resourceErrorTooManyResources);
         $documentErrorTooManyResources->addResource($resourceErrorTooManyResources);
         $response[] = [
-            HttpCode::ValidationFailed,
+            HttpCode::PreconditionFailed,
             $documentErrorTooManyResources,
         ];
 
@@ -118,7 +118,7 @@ class DatabaseTest extends AbstractFunctionalTest
             request: new Data(
                 verb: Verbs::Post,
                 endpoint: '/modeldatabase',
-                body: $document->prepare()
+                payload: $document->prepare()
             )
         );
 
@@ -147,7 +147,7 @@ class DatabaseTest extends AbstractFunctionalTest
             request: new Data(
                 verb: Verbs::Patch,
                 endpoint: '/modeldatabase',
-                body: $document->prepare()
+                payload: $document->prepare()
             )
         );
 

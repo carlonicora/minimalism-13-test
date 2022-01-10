@@ -6,7 +6,7 @@ use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\ServiceInterface;
 use CarloNicora\Minimalism\Minimalism;
 use CarloNicora\Minimalism\Services\MySQL\MySQL;
-use CarloNicora\Minimalism\Services\RabbitMq\RabbitMq;
+use CarloNicora\Minimalism\Services\Redis\Redis;
 use Exception;
 
 trait ServiceGenerationTrait
@@ -51,14 +51,14 @@ trait ServiceGenerationTrait
     }
 
     /**
-     * @return RabbitMq|ServiceInterface
+     * @return Redis|DataInterface|ServiceInterface
      * @throws Exception
      */
-    protected static function createRabbitMQ(
-    ): RabbitMq|ServiceInterface
+    protected static function createRedis(
+    ): Redis|DataInterface|ServiceInterface
     {
         self::setupMinimalism();
 
-        return self::$minimalism->getService(RabbitMq::class);
+        return self::$minimalism->getService(Redis::class);
     }
 }

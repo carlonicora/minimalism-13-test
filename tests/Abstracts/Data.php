@@ -3,7 +3,7 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts;
 
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\Verbs;
 use CURLFile;
-use JsonException;
+use Exception;
 
 class Data
 {
@@ -41,7 +41,7 @@ class Data
             'Test-Environment:1'
         ];
 
-        if (false === empty($this->files)) {
+        if (!empty($this->files)) {
             $httpHeaders[] = 'Content-Type:multipart/form-data';
         } else {
             $httpHeaders[] ='Content-Type:application/vnd.api+json';
@@ -57,7 +57,7 @@ class Data
     /**
      * @param string $serverUrl
      * @return array
-     * @throws JsonException
+     * @throws Exception
      */
     public function getCurlOpts(
         string $serverUrl
@@ -83,7 +83,7 @@ class Data
                     $opts[CURLOPT_POSTFIELDS] = json_encode($this->payload, JSON_THROW_ON_ERROR);
                 }
 
-                if (false === empty($this->files)) {
+                if (!empty($this->files)) {
                     $buildFiles = static function(
                         array $files,
                         bool $subLevel = false
@@ -92,10 +92,18 @@ class Data
                         $fileArray = [];
                         foreach ($files as $fileKey => $file) {
                             $multidimensialKey = $subLevel ? '[' . $fileKey . ']' : $fileKey;
-                            if (false === empty($file['path'])) {
+                            if (!empty($file['path'])) {
                                 $cFile = new CURLFile(
                                     $file['path'],
                                     $file['mimeType'],
+                                    $file['name']
+                                );
+
+                                $fileArray [$multidimensialKey] = $cFile;
+                            } elseif (!empty($file['tmp_name'])){
+                                $cFile = new CURLFile(
+                                    $file['tmp_name'],
+                                    $file['type'],
                                     $file['name']
                                 );
 
@@ -110,18 +118,24 @@ class Data
                         return $fileArray;
                     };
 
-                    $opts[CURLOPT_POSTFIELDS] = $buildFiles($this->files);
+                    if ($this->body !== null){
+                        $opts[CURLOPT_POSTFIELDS] = array_merge($this->body, $buildFiles($this->files));
+                    } else {
+                        $opts[CURLOPT_POSTFIELDS] = $buildFiles($this->files);
+                    }
                 }
                 break;
             case Verbs::Delete:
             case Verbs::Patch:
             case Verbs::Put:
                 $opts [CURLOPT_CUSTOMREQUEST] = $this->verb->value;
-                if (is_array($this->body)) {
-                    $bodyArray = json_encode($this->body, JSON_THROW_ON_ERROR);
+
+                if ($this->body !== null){
+                    $opts[CURLOPT_POSTFIELDS] = http_build_query($this->body) ;
+                } elseif ($this->payload !== null){
+                    $opts[CURLOPT_POSTFIELDS] = json_encode($this->payload, JSON_THROW_ON_ERROR);
                 }
 
-                $opts[CURLOPT_POSTFIELDS] = $bodyArray ?? $this->body;
                 break;
             default:
                 if (isset($this->body)) {

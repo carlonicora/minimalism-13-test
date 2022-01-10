@@ -29,7 +29,7 @@ enum AppsData: int implements TableDataInterface
     public function row(): array
     {
         return match ($this) {
-            self::Default => $this->map(user: UsersData::Default, name: 'live', url: 'https://app.phlow.com/auth', clientId: '0f626d858ac5bae30ab5169645cddc20fa8c55e1c02b95792d8c321171551e20'),
+            self::Default => $this->map(user: UsersData::Default, name: 'live', url: 'https://app.tet.com/auth', clientId: '0f626d858ac5bae30ab5169645cddc20fa8c55e1c02b95792d8c321171551e20'),
         };
     }
 

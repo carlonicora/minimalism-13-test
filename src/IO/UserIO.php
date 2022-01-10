@@ -1,5 +1,5 @@
 <?php
-namespace CarloNicora\Minimalism\Minimalism13Test\Readers;
+namespace CarloNicora\Minimalism\Minimalism13Test\IO;
 
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Interfaces\Data\Interfaces\DataFunctionInterface;
@@ -10,7 +10,7 @@ use CarloNicora\Minimalism\Minimalism13Test\Data\User;
 use CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables\UsersTable;
 use Exception;
 
-class UserReader extends AbstractMinimalismLoader
+class UserIO extends AbstractMinimalismLoader
 {
     /**
      * @param int $userId
@@ -55,6 +55,49 @@ class UserReader extends AbstractMinimalismLoader
                     cacheBuilder: $this->cacheFactory->user($userId)
                 ),
             )
+        );
+    }
+
+    /**
+     * @param User|User[] $users
+     */
+    public function update(
+        User|array $users,
+    ): void
+    {
+        $recordset = [];
+
+        if (is_array($users)) {
+            foreach ($users ?? [] as $user) {
+                $recordset[] = $user->export();
+            }
+        } else {
+            $recordset[] = $users->export();
+        }
+
+        $this->data->update(
+            tableInterfaceClassName: UsersTable::class,
+            records: $recordset,
+        );
+    }
+
+    /**
+     * @param User $user
+     * @return User
+     * @throws Exception
+     */
+    public function insert(
+        User $user,
+    ): User
+    {
+        $recordset = $this->data->insert(
+            tableInterfaceClassName: UsersTable::class,
+            records: [$user->export()],
+        );
+
+        return $this->returnSingleObject(
+            recordset: $recordset,
+            objectType: User::class,
         );
     }
 }

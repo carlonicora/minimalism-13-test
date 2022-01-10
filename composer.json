@@ -6,7 +6,7 @@
   "time": "2020-12-28",
   "license": "MIT",
   "type": "library",
-  "minimum-stability": "alpha",
+  "minimum-stability": "stable",
   "authors": [
     {
       "name": "Carlo Nicora",
@@ -44,10 +44,8 @@
     "carlonicora/minimalism-service-cacher": "~4.0",
     "carlonicora/minimalism-service-redis": "~4.0",
     "carlonicora/minimalism-service-builder": "~2.0",
-    "carlonicora/minimalism-service-rabbitmq": "~5.0",
     "carlonicora/minimalism-service-mailer-mandrill": "~1.0",
     "carlonicora/minimalism-service-mailer-twig": "~1.0",
-    "carlonicora/minimalism-service-slack": "~3.0",
     "carlonicora/minimalism-service-auth": "~4.0"
   },
   "require-dev": {

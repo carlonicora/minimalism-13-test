@@ -5,7 +5,7 @@ use CarloNicora\JsonApi\Document;
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\AbstractFunctionalTest;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\Data;
-use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\Verbs;
 use Exception;
 
@@ -32,7 +32,7 @@ class ValidatorTest extends AbstractFunctionalTest
         );
 
         self::assertEquals(
-            expected: HttpCode::ValidationFailed,
+            expected: HttpCode::PreconditionFailed,
             actual: $response->getHttpCode(),
         );
     }
@@ -57,7 +57,7 @@ class ValidatorTest extends AbstractFunctionalTest
         );
 
         self::assertEquals(
-            expected: HttpCode::ValidationFailed,
+            expected: HttpCode::PreconditionFailed,
             actual: $response->getHttpCode(),
         );
     }
@@ -78,7 +78,7 @@ class ValidatorTest extends AbstractFunctionalTest
             request: new Data(
                 verb: Verbs::Post,
                 endpoint: '/ModelValidator',
-                body: $document->prepare()
+                payload: $document->prepare()
             )
         );
 

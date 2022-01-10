@@ -3,6 +3,7 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Interfaces\Data\Interfaces\DataInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Parameters\PositionedEncryptedParameter;
@@ -16,13 +17,13 @@ class ModelDatabase extends AbstractModel
     /**
      * @param DataInterface $data
      * @param PositionedEncryptedParameter $id
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function get(
         DataInterface $data,
         PositionedEncryptedParameter $id,
-    ): int
+    ): HttpCode
     {
         $response = $data->read(
             tableInterfaceClassName: UsersTable::class,
@@ -31,7 +32,7 @@ class ModelDatabase extends AbstractModel
         );
 
         if (!array_is_list($response) || count($response) !== 1){
-            return 404;
+            return HttpCode::NotFound;
         }
 
         $user = new ResourceObject(
@@ -44,21 +45,21 @@ class ModelDatabase extends AbstractModel
             $user
         );
 
-        return 200;
+        return HttpCode::Ok;
     }
 
     /**
      * @param EncrypterInterface $encrypter
      * @param DataInterface $data
      * @param UserNewValidator $payload
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function post(
         EncrypterInterface $encrypter,
         DataInterface $data,
         UserNewValidator $payload,
-    ): int
+    ): HttpCode
     {
         $newUser = [
             'email' => $payload->getDocument()->resources[0]->attributes->get('email')
@@ -76,21 +77,21 @@ class ModelDatabase extends AbstractModel
             ),
         );
 
-        return 201;
+        return HttpCode::Created;
     }
 
     /**
      * @param EncrypterInterface $encrypter
      * @param DataInterface $data
      * @param UserValidator $payload
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function patch(
         EncrypterInterface $encrypter,
         DataInterface $data,
         UserValidator $payload,
-    ): int
+    ): HttpCode
     {
         $id = $encrypter->decryptId($payload->getDocument()->resources[0]->id);
 
@@ -106,6 +107,6 @@ class ModelDatabase extends AbstractModel
             records: $recordset,
         );
 
-        return 200;
+        return HttpCode::Ok;
     }
 }

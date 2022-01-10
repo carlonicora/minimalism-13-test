@@ -2,6 +2,7 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Interfaces\Mailer\Enums\RecipientType;
 use CarloNicora\Minimalism\Interfaces\Mailer\Interfaces\MailerInterface;
 use CarloNicora\Minimalism\Interfaces\Mailer\Objects\Email;
@@ -9,9 +10,13 @@ use CarloNicora\Minimalism\Interfaces\Mailer\Objects\Recipient;
 
 class ModelEmail extends AbstractModel
 {
+    /**
+     * @param MailerInterface $mailer
+     * @return HttpCode
+     */
     public function post(
         MailerInterface $mailer,
-    ): int
+    ): HttpCode
     {
         $sender = new Recipient(
             emailAddress: 'carlo@phlow.com',
@@ -33,6 +38,6 @@ class ModelEmail extends AbstractModel
 
         $mailer->send(email: $mail);
 
-        return 201;
+        return HttpCode::Created;
     }
 }

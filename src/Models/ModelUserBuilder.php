@@ -2,20 +2,21 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Parameters\PositionedEncryptedParameter;
-use CarloNicora\Minimalism\Minimalism13Test\Readers\UserReader;
+use CarloNicora\Minimalism\Minimalism13Test\IO\UserIO;
 
 class ModelUserBuilder extends AbstractModel
 {
     /**
-     * @param UserReader $readUser
+     * @param UserIO $readUser
      * @param PositionedEncryptedParameter $id
-     * @return int
+     * @return HttpCode
      */
     public function get(
-        UserReader $readUser,
+        UserIO                       $readUser,
         PositionedEncryptedParameter $id,
-    ): int
+    ): HttpCode
     {
         $this->document->addResource(
             $readUser->loadResourceById(
@@ -23,6 +24,6 @@ class ModelUserBuilder extends AbstractModel
             )
         );
 
-        return 200;
+        return HttpCode::Ok;
     }
 }

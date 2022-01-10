@@ -9,14 +9,12 @@ class User extends AbstractDataObject
     /**
      * @param ObjectFactory $objectFactory
      * @param array|null $data
-     * @param int|null $levelOfChildrenToLoad
      * @param int|null $id
      * @param string|null $email
      */
     public function __construct(
         ObjectFactory $objectFactory,
         ?array $data = null,
-        ?int $levelOfChildrenToLoad = 0,
         private ?int $id=null,
         private ?string $email=null,
     )
@@ -24,7 +22,6 @@ class User extends AbstractDataObject
         parent::__construct(
             $objectFactory,
             $data,
-            $levelOfChildrenToLoad,
         );
     }
 

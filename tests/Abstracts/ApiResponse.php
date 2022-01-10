@@ -3,7 +3,7 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts;
 
 use CarloNicora\JsonApi\Document;
 use CarloNicora\JsonApi\Objects\ResourceObject;
-use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CurlHandle;
 use Exception;
 use Throwable;
@@ -41,7 +41,7 @@ class ApiResponse
             $this->error = 'API returned error: ' . $returnedJson;
         }
 
-        if (false === empty($returnedJson)) {
+        if (!empty($returnedJson)) {
             try {
                 $apiResponse = json_decode($returnedJson, true, 512, JSON_THROW_ON_ERROR);
                 $this->response = new Document($apiResponse);

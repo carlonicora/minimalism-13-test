@@ -2,7 +2,7 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Data;
 
 use CarloNicora\Minimalism\Factories\ObjectFactory;
-use CarloNicora\Minimalism\Minimalism13Test\Readers\UserReader;
+use CarloNicora\Minimalism\Minimalism13Test\IO\UserIO;
 use CarloNicora\Minimalism\Services\DataMapper\Abstracts\AbstractDataObject;
 use Exception;
 
@@ -14,7 +14,6 @@ class Book extends AbstractDataObject
     /**
      * @param ObjectFactory $objectFactory
      * @param array|null $data
-     * @param int|null $levelOfChildrenToLoad
      * @param int|null $id
      * @param int|null $userId
      * @param string|null $title
@@ -23,7 +22,6 @@ class Book extends AbstractDataObject
     public function __construct(
         ObjectFactory $objectFactory,
         ?array $data = null,
-        ?int $levelOfChildrenToLoad = 0,
         private ?int $id=null,
         private ?int $userId=null,
         private ?string $title=null,
@@ -32,7 +30,6 @@ class Book extends AbstractDataObject
         parent::__construct(
             $objectFactory,
             $data,
-            $levelOfChildrenToLoad,
         );
 
         $this->loadAuthor();
@@ -45,9 +42,9 @@ class Book extends AbstractDataObject
     ): void
     {
         if ($this->userId !== null){
-            /** @var UserReader $readUser */
+            /** @var UserIO $readUser */
             $readUser = $this->objectFactory->createSimpleObject(
-                className: UserReader::class,
+                className: UserIO::class,
             );
             $this->author = $readUser->loadById($this->userId);
         }

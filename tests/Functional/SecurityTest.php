@@ -4,7 +4,7 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Functional;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\AbstractFunctionalTest;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\Data;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\TableData\Oauth\TokensData;
-use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\Verbs;
 use Exception;
 

@@ -2,15 +2,16 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 
 class Index extends AbstractModel
 {
     /**
-     * @return int
+     * @return HttpCode
      */
     public function get(
-    ): int
+    ): HttpCode
     {
-        return 200;
+        return HttpCode::Ok;
     }
 }

@@ -3,6 +3,7 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Interfaces\Data\Interfaces\DataInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Parameters\PositionedEncryptedParameter;
 use CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables\UsersTable;
@@ -14,13 +15,13 @@ class ModelCachedDatabase extends AbstractModel
     /**
      * @param DataInterface $data
      * @param PositionedEncryptedParameter $id
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function get(
         DataInterface $data,
         PositionedEncryptedParameter $id,
-    ): int
+    ): HttpCode
     {
         $cacheFactory = new CacheFactory();
 
@@ -32,7 +33,7 @@ class ModelCachedDatabase extends AbstractModel
         );
 
         if (!array_is_list($response) || count($response) !== 1){
-            return 404;
+            return HttpCode::NotFound;
         }
 
         $email = $response[0]['email'];
@@ -51,9 +52,9 @@ class ModelCachedDatabase extends AbstractModel
         );
 
         if ($email !== $response[0]['email']) {
-            return 500;
+            return HttpCode::InternalServerError;
         }
 
-        return 200;
+        return HttpCode::Ok;
     }
 }

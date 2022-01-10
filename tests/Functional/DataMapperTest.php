@@ -5,7 +5,7 @@ use CarloNicora\JsonApi\Document;
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\AbstractFunctionalTest;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts\Data;
-use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\HttpCode;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Enums\Verbs;
 use Exception;
 
@@ -50,7 +50,7 @@ class DataMapperTest extends AbstractFunctionalTest
         $resourceErrorWrongType = new ResourceObject(type:'wrong');
         $documentErrorWrongType->addResource($resourceErrorWrongType);
         $response[] = [
-            HttpCode::ValidationFailed,
+            HttpCode::PreconditionFailed,
             $documentErrorWrongType,
         ];
 
@@ -58,7 +58,7 @@ class DataMapperTest extends AbstractFunctionalTest
         $resourceErrorMissingEmail = new ResourceObject(type:'user');
         $documentErrorMissingEmail->addResource($resourceErrorMissingEmail);
         $response[] = [
-            HttpCode::ValidationFailed,
+            HttpCode::PreconditionFailed,
             $documentErrorMissingEmail,
         ];
 
@@ -67,7 +67,7 @@ class DataMapperTest extends AbstractFunctionalTest
         $documentErrorTooManyResources->addResource($resourceErrorTooManyResources);
         $documentErrorTooManyResources->addResource($resourceErrorTooManyResources);
         $response[] = [
-            HttpCode::ValidationFailed,
+            HttpCode::PreconditionFailed,
             $documentErrorTooManyResources,
         ];
 
@@ -97,7 +97,7 @@ class DataMapperTest extends AbstractFunctionalTest
             request: new Data(
                 verb: Verbs::Post,
                 endpoint: '/modeldatamapper',
-                body: $document->prepare()
+                payload: $document->prepare()
             )
         );
 
@@ -119,14 +119,14 @@ class DataMapperTest extends AbstractFunctionalTest
     ): void
     {
         if ($result === HttpCode::Created)  {
-            $result = HttpCode::Ok;
+            $result = HttpCode::NoContent;
         }
 
         $response = self::call(
             request: new Data(
                 verb: Verbs::Patch,
                 endpoint: '/modeldatamapper',
-                body: $document->prepare()
+                payload: $document->prepare()
             )
         );
 

@@ -3,6 +3,7 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use Exception;
 
 class ModelTwig extends AbstractModel
@@ -13,14 +14,14 @@ class ModelTwig extends AbstractModel
     protected ?string $view='twig';
 
     /**
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function get(
-    ): int
+    ): HttpCode
     {
         $this->document->addResource(new ResourceObject('twig', 1));
 
-        return 200;
+        return HttpCode::Ok;
     }
 }

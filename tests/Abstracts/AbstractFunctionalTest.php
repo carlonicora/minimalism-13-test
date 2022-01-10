@@ -4,13 +4,21 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Tests\Abstracts;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Database\Setup\Traits\GenerateData;
 use CarloNicora\Minimalism\Minimalism13Test\Tests\Traits\ServiceGenerationTrait;
 use Exception;
-use JsonException;
 use PHPUnit\Framework\TestCase;
 
 class AbstractFunctionalTest extends TestCase
 {
     use GenerateData;
     use ServiceGenerationTrait;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        sleep(1);
+    }
 
     /**
      * @throws Exception
@@ -26,12 +34,11 @@ class AbstractFunctionalTest extends TestCase
             mysqlService: static::createMySQL(),
         );
 
+        static::createRedis()->remove(static::createRedis()->getKeys('minimalism*'));
+
         static::generateTestData(
             mysqlService: static::createMySQL(),
         );
-        try {
-            self::createRabbitMq()->purge('myQueue');
-        } catch (Exception) {}
     }
 
     /**
@@ -56,7 +63,6 @@ class AbstractFunctionalTest extends TestCase
     /**
      * @param Data $request
      * @return ApiResponse
-     * @throws JsonException
      * @throws Exception
      */
     protected static function call(
@@ -82,26 +88,5 @@ class AbstractFunctionalTest extends TestCase
         unset($curl);
 
         return $result;
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function removeGraceCollectorDataFields(
-        string $message,
-        array $removedFields,
-    ): string
-    {
-        $arrayMessage = json_decode($message, true, 512, JSON_THROW_ON_ERROR);
-
-        if ($removedFields !== []) {
-            foreach ($removedFields as $removedField){
-                if (array_key_exists($removedField, $arrayMessage)){
-                    unset($arrayMessage[$removedField]);
-                }
-            }
-        }
-
-        return json_encode($arrayMessage, JSON_THROW_ON_ERROR);
     }
 }

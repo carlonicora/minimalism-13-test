@@ -2,17 +2,18 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Interfaces\LoggerInterface;
 
 class ModelLogging extends AbstractModel
 {
     /**
      * @param LoggerInterface $logger
-     * @return int
+     * @return HttpCode
      */
     public function get(
         LoggerInterface $logger,
-    ): int
+    ): HttpCode
     {
         $logger->debug('debug message', 'minimalism 13 test', ['Model'=>self::class]);
         $logger->info('info message', 'minimalism 13 test', ['Model'=>self::class]);
@@ -23,6 +24,6 @@ class ModelLogging extends AbstractModel
         $logger->alert('alert message', 'minimalism 13 test', ['Model'=>self::class]);
         $logger->emergency('emergency message', 'minimalism 13 test', ['Model'=>self::class]);
 
-        return 200;
+        return HttpCode::Ok;
     }
 }

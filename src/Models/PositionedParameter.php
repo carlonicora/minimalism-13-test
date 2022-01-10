@@ -2,20 +2,21 @@
 namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use Exception;
 
 class PositionedParameter extends AbstractModel
 {
     /**
      * @param \CarloNicora\Minimalism\Parameters\PositionedParameter $name
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function get(
         \CarloNicora\Minimalism\Parameters\PositionedParameter $name,
-    ): int
+    ): HttpCode
     {
         $this->document->meta->add('name', $name->getValue());
-        return 200;
+        return HttpCode::Ok;
     }
 }

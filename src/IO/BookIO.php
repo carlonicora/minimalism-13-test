@@ -1,11 +1,11 @@
 <?php
-namespace CarloNicora\Minimalism\Minimalism13Test\Readers;
+namespace CarloNicora\Minimalism\Minimalism13Test\IO;
 
 use CarloNicora\Minimalism\Minimalism13Test\Abstracts\AbstractMinimalismLoader;
 use CarloNicora\Minimalism\Minimalism13Test\Databases\M13T\Tables\BooksTable;
 use Exception;
 
-class BookReader extends AbstractMinimalismLoader
+class BookIO extends AbstractMinimalismLoader
 {
     /**
      * @param int $userId

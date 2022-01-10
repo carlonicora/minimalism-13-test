@@ -3,31 +3,29 @@ namespace CarloNicora\Minimalism\Minimalism13Test\Models;
 
 use CarloNicora\JsonApi\Objects\ResourceObject;
 use CarloNicora\Minimalism\Abstracts\AbstractModel;
+use CarloNicora\Minimalism\Enums\HttpCode;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Interfaces\EncrypterInterface;
 use CarloNicora\Minimalism\Interfaces\Encrypter\Parameters\PositionedEncryptedParameter;
 use CarloNicora\Minimalism\Minimalism13Test\Data\User;
-use CarloNicora\Minimalism\Minimalism13Test\Readers\UserReader;
+use CarloNicora\Minimalism\Minimalism13Test\IO\UserIO;
 use CarloNicora\Minimalism\Minimalism13Test\Validators\UserNewValidator;
 use CarloNicora\Minimalism\Minimalism13Test\Validators\UserValidator;
-use CarloNicora\Minimalism\Minimalism13Test\Writers\UserWriter;
 use Exception;
 
 class ModelDataMapper extends AbstractModel
 {
     /**
      * @param EncrypterInterface $encrypter
-     * @param UserReader $readUser
      * @param PositionedEncryptedParameter $id
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function get(
-        EncrypterInterface $encrypter,
-        UserReader $readUser,
+        EncrypterInterface           $encrypter,
         PositionedEncryptedParameter $id,
-    ): int
+    ): HttpCode
     {
-        $user = $readUser->loadById(
+        $user = $this->objectFactory->create(UserIO::class)->loadById(
             $id->getValue()
         );
 
@@ -44,27 +42,25 @@ class ModelDataMapper extends AbstractModel
             $userResource
         );
 
-        return 200;
+        return HttpCode::Ok;
     }
 
     /**
      * @param EncrypterInterface $encrypter
-     * @param UserWriter $writeUser
      * @param UserNewValidator $payload
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function post(
         EncrypterInterface $encrypter,
-        UserWriter $writeUser,
         UserNewValidator $payload,
-    ): int
+    ): HttpCode
     {
         $user = new User(
             objectFactory: $this->objectFactory,
             email: $payload->getDocument()->resources[0]->attributes->get('email')
         );
-        $user = $writeUser->insert($user);
+        $user = $this->objectFactory->create(UserIO::class)->insert($user);
 
         $this->getDocument()->addResource(
             resource: new ResourceObject(
@@ -73,31 +69,27 @@ class ModelDataMapper extends AbstractModel
             ),
         );
 
-        return 201;
+        return HttpCode::Created;
     }
 
     /**
      * @param EncrypterInterface $encrypter
-     * @param UserReader $readUser
-     * @param UserWriter $writeUser
      * @param UserValidator $payload
-     * @return int
+     * @return HttpCode
      * @throws Exception
      */
     public function patch(
         EncrypterInterface $encrypter,
-        UserReader $readUser,
-        UserWriter $writeUser,
-        UserValidator $payload,
-    ): int
+        UserValidator      $payload,
+    ): HttpCode
     {
         $id = $encrypter->decryptId($payload->getDocument()->resources[0]->id);
 
-        $user = $readUser->loadById($id);
+        $user = $this->objectFactory->create(UserIO::class)->loadById($id);
         $user->setEmail($payload->getDocument()->resources[0]->attributes->get('email'));
 
-        $writeUser->update($user);
+        $this->objectFactory->create(UserIO::class)->update($user);
 
-        return 200;
+        return HttpCode::NoContent;
     }
 }
